@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import './_loader.scss';
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+header nav {
+    background-color: #151515;
+    padding: 5px 40px;
+
+    & ul {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 0;
+
+        & li.nav-btn {
+            display: none;
+        }
+
+        & li.logo {
+            flex: 1;
+            color: white;
+            font-size: 36px;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        & li.nav-items {
+            width: auto;
+            margin: 0px 16px;
+            position: relative;
+            text-align: center;
+
+            &::after {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                left: 0;
+                bottom: -4px;
+                height: 2px;
+                width: 100%;
+                background-color: #33ffff;
+                opacity: 0;
+                transition: all 0.2s ease;
+            }
+
+            &:hover::after {
+                opacity: 1;
+                bottom: 0px;
+            }
+
+            &:hover a {
+                color: cyan;
+            }
+
+            & a {
+                color: white;
+                display: inline-block;
+                text-decoration: none;
+                font-size: 20px;
+                padding: 12px 16px;
+                text-align: center;
+                transition: 0.4s ease;
+            }   
+        } 
+
+    }
+}
+
+@media all and (max-width: 1023px) {
+    header nav {
+        padding: 5px 30px;
+
+        & ul {
+            flex-direction: column;
+
+            & li.nav-btn {
+                display: inline-block;
+                color: white;
+                font-size: 30px;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+
+                &.show i::before {
+                    content: '\2715';
+                    display: block;
+                }
+            }
+
+
+            & li.nav-items {
+                width: 100%;
+                display: none;
+
+                &.show {
+                    display: block;
+                }
+
+                &:hover {
+                    border-radius: 8px;
+                    box-shadow: inset 0 0 5px #33ffff, inset 0 0 10px #66ffff;
+                }
+
+                &:hover::after {
+                    opacity: 0;
+                }
+            }
+        }
+    }
+}

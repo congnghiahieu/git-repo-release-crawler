@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Git repo release crawler</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+            integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <link rel="stylesheet" href="./public/css/header.css" />
+        <link rel="stylesheet" href="./public/css/container.css" />
+    </head>
+    <body>
+        <div class="root">
+            <header>
+                <nav>
+                    <ul class="nav__links">
+                        <li class="logo">UET</li>
+                        <li class="nav-items"><a href="/">Home</a></li>
+                        <li class="nav-items"><a href="/">About</a></li>
+                        <li class="nav-items"><a href="/">Service</a></li>
+                        <li class="nav-items"><a href="/">Team</a></li>
+                        <li class="nav-items"><a href="/">Portfolio</a></li>
+                        <li class="nav-items"><a href="/">Contact</a></li>
+                        <li class="nav-btn"><i class="fa-solid fa-bars"></i></li>
+                    </ul>
+                </nav>
+            </header>
+            <div class="container grid wide">
+                <div class="content">
+                    <form class="crawl-form">
+                        <input
+                            type="text"
+                            name="crawl-input"
+                            id="crawl-input"
+                            class="crawl-input"
+                            placeholder="Enter github's repository"
+                        />
+                        <button class="crawl-btn">Bắt đầu tìm kiếm</button>
+                    </form>
+                    <div class="dots-loading"></div>
+                    <div class="crawl-error"></div>
+                    <div class="crawl-result"></div>
+                </div>
+            </div>
+            <!-- <footer>
+                <h1>Footer</h1>
+            </footer> -->
+        </div>
+    </body>
+    <!-- Main git crawler -->
+    <script src="./index.js" type="module"></script>
+    <script>
+        const btn = document.querySelector('.nav-btn');
+        const items = document.querySelectorAll('.nav-items');
+
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('show');
+            items.forEach(item => {
+                item.classList.toggle('show');
+            });
+        });
+
+        const goToTopBtn = document.createElement('button');
+        goToTopBtn.innerText = 'Go to top';
+        Object.assign(goToTopBtn.style, {
+            padding: '20px',
+            position: 'fixed',
+            right: '20px',
+            bottom: '20px',
+            color: 'white',
+            border: '1px solid gray',
+            borderRadius: '10px',
+            backgroundColor: '#0077b6',
+            cursor: 'pointer',
+        });
+
+        // Hit go to top btn
+        goToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                behavior: 'smooth',
+                top: '0',
+            });
+        });
+
+        // Scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY >= 600) {
+                if (!document.contains(goToTopBtn)) {
+                    document.body.appendChild(goToTopBtn);
+                }
+            } else goToTopBtn.remove();
+        });
+
+        // Handle show detail list
+        function handleShow(element) {
+            const detailList = element.closest('.result-item.com').querySelector('.com');
+
+            detailList.classList.toggle('show');
+
+            if (detailList.classList.contains('show')) {
+                element.innerText = 'Hide detail list';
+                return;
+            }
+            element.innerText = 'Show detail list';
+        }
+    </script>
+</html>
