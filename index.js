@@ -69,7 +69,7 @@ form.addEventListener('submit', async event => {
                 console.log(`Đang lấy thông tin của release ${curRelease.tag_name}`);
 
                 // Lấy thông tin của release và chèn vào result list
-                appendRelease(resultList, curRelease);
+                const li = appendRelease(resultList, curRelease);
 
                 // Lấy thông tin về diff commits so với bản release trước
                 if (num < releases.length - 1) {
@@ -83,10 +83,19 @@ form.addEventListener('submit', async event => {
                     );
 
                     // Chèn commit vào DOM
-                    appendCommit(resultList, fullCommits, prevRelease, curRelease, comApi, comHtml);
+                    li.appendChild(
+                        appendCommit(
+                            resultList,
+                            fullCommits,
+                            prevRelease,
+                            curRelease,
+                            comApi,
+                            comHtml
+                        )
+                    );
                 }
             }
-            // Chèn kết quả cuối cùng vào DOM
+
             clearChilden(loader);
             crawlResult.appendChild(resultList);
         } catch (err) {

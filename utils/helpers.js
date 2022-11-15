@@ -7,6 +7,8 @@ import {
     githubApi,
     crawlError,
     loader,
+    token,
+    urlRegex,
 } from './constants.js';
 
 import parseMdToHtml from './mdToHtml.js';
@@ -16,7 +18,7 @@ export function isValidGitRepo(string) {
     // https://github.com/mastodon/mastodon
     // regex: /^https:\/\/github.com\/\w+\/\w+$/ to test is github repo URL
 
-    return /^https:\/\/github.com\/\w+\/\w+$/.test(string);
+    return urlRegex.test(string);
 }
 
 export async function getFullReleases(source) {
@@ -93,12 +95,14 @@ export function appendRelease(list, curRelease) {
     releaseLi.classList.add('result-item', 'rel');
     releaseLi.innerHTML = getReleaseInfo(curRelease);
     list.appendChild(releaseLi);
+
+    return releaseLi;
 }
 
 // Dải html của compare commit vào DOM
 export function appendCommit(list, commits, prevRelease, curRelease, diffComApi, diffComHtml) {
     const html = getCommitsInfo(commits);
-    const difComLi = document.createElement('li');
+    const difComLi = document.createElement('div');
     difComLi.classList.add('result-item', 'com');
     difComLi.innerHTML = `
         <div class="com-summary">
@@ -111,17 +115,13 @@ export function appendCommit(list, commits, prevRelease, curRelease, diffComApi,
                     compare:${prevRelease.tag_name}
                 </p>
             </div>
-            <div class="com-diff-url">
-                <a href=${diffComApi} target="_blank">Diff API</a>
-                <a href=${diffComHtml} target="_blank">Diff HTML</a>
-            </div>
-            <button class="com-btn" onclick="handleShow(this)">Show detail list</button>
         </div>
-        <ul class="com">
+        <ul class="com show">
             ${html}
         </ul>
     `;
-    list.appendChild(difComLi);
+
+    return difComLi;
 }
 
 export function getReleaseApi(source, pageNumber) {
@@ -142,7 +142,7 @@ export async function fetchReleaseApi(api) {
     await fetch(api, {
         method: 'GET',
         headers: {
-            Authorization: 'Token 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',
+            Authorization: `Token ${token}`,
             Accept: 'application/vnd.github+json',
         },
     })
@@ -181,7 +181,7 @@ export async function fetchCompareApi(api) {
     await fetch(api, {
         method: 'GET',
         headers: {
-            Authorization: 'Token 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',
+            Authorization: `Token ${token}`,
             Accept: 'application/vnd.github+json',
         },
     })
@@ -236,17 +236,17 @@ export function getReleaseInfo(release) {
         <div class="rel-time">
             <p class="">Created: ${createdAt}</p>
             <p class="">Published: ${publishAt}</p>
+            <div class="rel-url">
+                <a href=${apiUrl} class="rel-url-api" target="_blank">Release API</a>
+                <a href=${htmlUrl} class="rel-url-html" target="_blank">Release Page</a>
+            </div>
         </div>
     </div>
         <div class="rel-log">
-            <span>Change log:</span>
+            <span>Change log</span>
             <div class="log-content">
                 ${changeLog}
             </div>
-        </div>
-        <div class="rel-url">
-            <a href=${apiUrl} class="rel-url-api" target="_blank">Release API</a>
-            <a href=${htmlUrl} class="rel-url-html" target="_blank">Release Page</a>
         </div>
     `;
 }
@@ -257,22 +257,21 @@ export function getCommitsInfo(commits) {
             const hash = commit.sha;
             const commitApiUrl = commit.url;
             const commitHtmlUrl = commit.html_url;
-            const message = commit.commit.message.trim();
+            const message = modifyComment(commit.commit.message);
             const name = commit.commit.committer.name.trim();
             const date = new Date(commit.commit.committer.date).toLocaleDateString();
 
             return `
                 <li class="com-item">
                     <div class="com-info">
-                        <p class="com-comment">Commit's comment: ${message}</p>
+                        <div class="com-comment">
+                            <span>Commit's comment:</span>
+                            ${message}
+                        </div>
                         <p class="com-date">Commit's date: ${date}</p>
                         <p class="com-name">Commit's commiter: ${name}</p>
                         <p class="com-hash">Commit's hash code: ${hash}</p>
                     </div>
-                    <div class="com-url">
-                    <a href=${commitApiUrl} class="com-url-api" target="_blank">Commit API</a>
-                    <a href=${commitHtmlUrl} class="com-url-html" target="_blank">Commit Page</a>
-                </div>
                 </li>`;
         })
         .reverse()
@@ -287,6 +286,10 @@ function modifyChangeLog(changeLog) {
     // .replace(/</g, '&lt').replace(/>/g, '&gt').trim();
     let res = parseMdToHtml(changeLog);
     return res;
+}
+
+function modifyComment(comment) {
+    return parseMdToHtml(comment);
 }
 
 // Clear các element cũ cho lần crawl tiếp theo

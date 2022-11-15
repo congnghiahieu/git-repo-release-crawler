@@ -74,20 +74,27 @@ p, h1, h2, h3 {
 .result-item.rel {
     display: flex;
     justify-content: space-between;
-    column-gap: 20px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     padding-bottom: 16px;
+    margin-bottom: 40px;
 
     & .rel-sum {
-       flex-basis: 200px;
+       width: 200px;
        display: flex;
        flex-direction: column;
        row-gap: 20px;
        align-items: center;
 
+       & .rel-version {
+            max-width: 100%;
+            @include textTruncate(4);
+            word-wrap: normal;
+            word-break: break-all;
+       }
+
        & .rel-version p {
             font-weight: 600;
-            font-size: 24px;
+            font-size: 22px;
             margin: 0 0 20px;
 
        }
@@ -115,10 +122,19 @@ p, h1, h2, h3 {
         font-size: 24px;
         font-weight: 600;
 
+        & img {
+            max-width: 100%;
+            object-fit: cover;
+        }
+
+        & span {
+            text-align: center;
+        }
+
         & .log-content {
             height: 350px;
             overflow-y: auto;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: normal;
 
             & h1, h2, h3 {
@@ -161,17 +177,19 @@ p, h1, h2, h3 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 24px 16px;
+    justify-content: space-between;
+    flex: 1;
+    overflow-y: auto;
 
     & .com-btn {
-        text-align: center;
+            text-align: center;
             display: inline-block;
             outline: none;
             display: block;
-            max-width: 400px;
+            max-width: 300px;
             border: 1px solid rgba(0,0,0,0.6);
             border-radius: 12px;
-            padding: 18px;
+            padding: 12px;
             cursor: pointer;
             color: white;
             border-radius: 8px;
@@ -185,14 +203,14 @@ p, h1, h2, h3 {
     }
 
     & .com-summary {
-        align-self: flex-start;
+        align-self: center;
+        column-gap: 40px;
         display: flex;
         align-items: center;
-        column-gap: 80px;
 
         & .com-compare {
             font-weight: 600;
-            font-size: 24px;
+            font-size: 20px;
         }
 
         & .com-diff-url {
@@ -207,8 +225,10 @@ p, h1, h2, h3 {
 
     & .com {
         display: none;
-        padding: 10px 20px;
-        max-width: 1200px;
+        height: 350px;
+        overflow-y: auto;
+        font-size: 1.4rem;
+        width: 100%;
 
         &.show {
             display: block;
@@ -218,7 +238,7 @@ p, h1, h2, h3 {
             margin-top: 32px;
             display: flex;
             justify-content: space-around;
-            column-gap: 40px;
+            padding-left: 8px;
             position: relative;
 
             &::before {
@@ -233,6 +253,11 @@ p, h1, h2, h3 {
 
             & .com-info {
                 flex: 1;
+
+                & img {
+                    max-width: 100%;
+                    object-fit: cover;
+                }
 
                 & .com-comment {
                     font-weight: 600;

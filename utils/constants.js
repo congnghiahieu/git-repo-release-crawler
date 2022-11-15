@@ -14,3 +14,5 @@ export const API_NOT_EXIST_MSG = 'Github API không tồn tại: ';
 export const PARSE_INFO_MSG = 'Có lỗi trong quá trình phần tích thông tin';
 export const COMMITS_QUANTITY_MSG = 'Số lượng commits không khớp: ';
 export const CHANGELOG_NO_INFO = 'Không có thông tin được cập nhật về bản release này';
+export const token = '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';
+export const urlRegex = /^https:\/\/github.com\/[\w\-]+\/[\w\-]+$/;

@@ -66,20 +66,33 @@ p, h1, h2, h3 {
 .result-item.rel {
   display: flex;
   justify-content: space-between;
-  column-gap: 20px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   padding-bottom: 16px;
+  margin-bottom: 40px;
 }
 .result-item.rel .rel-sum {
-  flex-basis: 200px;
+  width: 200px;
   display: flex;
   flex-direction: column;
   row-gap: 20px;
   align-items: center;
 }
+.result-item.rel .rel-sum .rel-version {
+  max-width: 100%;
+  display: inline-block;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: normal;
+  word-wrap: normal;
+  word-break: break-all;
+}
 .result-item.rel .rel-sum .rel-version p {
   font-weight: 600;
-  font-size: 24px;
+  font-size: 22px;
   margin: 0 0 20px;
 }
 .result-item.rel .rel-sum .rel-time {
@@ -103,10 +116,17 @@ p, h1, h2, h3 {
   font-size: 24px;
   font-weight: 600;
 }
+.result-item.rel .rel-log img {
+  max-width: 100%;
+  object-fit: cover;
+}
+.result-item.rel .rel-log span {
+  text-align: center;
+}
 .result-item.rel .rel-log .log-content {
   height: 350px;
   overflow-y: auto;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: normal;
 }
 .result-item.rel .rel-log .log-content h1, .result-item.rel .rel-log .log-content h2, .result-item.rel .rel-log .log-content h3 {
@@ -143,17 +163,19 @@ p, h1, h2, h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px 16px;
+  justify-content: space-between;
+  flex: 1;
+  overflow-y: auto;
 }
 .result-item.com .com-btn {
   text-align: center;
   display: inline-block;
   outline: none;
   display: block;
-  max-width: 400px;
+  max-width: 300px;
   border: 1px solid rgba(0, 0, 0, 0.6);
   border-radius: 12px;
-  padding: 18px;
+  padding: 12px;
   cursor: pointer;
   color: white;
   border-radius: 8px;
@@ -165,14 +187,14 @@ p, h1, h2, h3 {
   transform: translateY(-1px);
 }
 .result-item.com .com-summary {
-  align-self: flex-start;
+  align-self: center;
+  column-gap: 40px;
   display: flex;
   align-items: center;
-  column-gap: 80px;
 }
 .result-item.com .com-summary .com-compare {
   font-weight: 600;
-  font-size: 24px;
+  font-size: 20px;
 }
 .result-item.com .com-summary .com-diff-url {
   display: flex;
@@ -183,8 +205,10 @@ p, h1, h2, h3 {
 }
 .result-item.com .com {
   display: none;
-  padding: 10px 20px;
-  max-width: 1200px;
+  height: 350px;
+  overflow-y: auto;
+  font-size: 1.4rem;
+  width: 100%;
 }
 .result-item.com .com.show {
   display: block;
@@ -193,7 +217,7 @@ p, h1, h2, h3 {
   margin-top: 32px;
   display: flex;
   justify-content: space-around;
-  column-gap: 40px;
+  padding-left: 8px;
   position: relative;
 }
 .result-item.com .com .com-item::before {
@@ -207,6 +231,10 @@ p, h1, h2, h3 {
 }
 .result-item.com .com .com-item .com-info {
   flex: 1;
+}
+.result-item.com .com .com-item .com-info img {
+  max-width: 100%;
+  object-fit: cover;
 }
 .result-item.com .com .com-item .com-info .com-comment {
   font-weight: 600;
