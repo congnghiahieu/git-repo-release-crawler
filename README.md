@@ -1,3 +1,3 @@
 # git-repo-release-crawler
 ## Demo
-<img src="demo.png" width="1000"/>
+<img src="demo.png" width="1200"/>
